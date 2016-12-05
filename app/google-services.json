@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "504122088178",
+    "firebase_url": "https://forum-ebb99.firebaseio.com",
+    "project_id": "forum-ebb99",
+    "storage_bucket": "forum-ebb99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504122088178:android:59066601ba0d8d6c",
+        "android_client_info": {
+          "package_name": "com.example.guest.forumclass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504122088178-713rhs9c3p1ugu2p9i7n95h0mbvs4b8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLOYabKrcCEjnoaQxeymxAZdmoqHvqhlI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
