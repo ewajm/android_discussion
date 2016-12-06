@@ -2,6 +2,9 @@ package com.example.guest.forumclass.models;
 
 import org.parceler.Parcel;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by Guest on 12/5/16.
  */
@@ -13,6 +16,8 @@ public class Post {
     String imageUrl;
     Long timestamp;
     String id;
+    int numComments;
+
 
     public String getId() {
         return id;

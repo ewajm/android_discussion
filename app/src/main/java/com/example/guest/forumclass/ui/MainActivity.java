@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mEditor = mSharedPreferences.edit();
-        mEditor.remove(Constants.FIREBASE_SINGLE_CATEGORY_QUERY);
+        mEditor.remove(Constants.FIREBASE_SINGLE_CATEGORY_QUERY).apply();
         mFirebaseAdapter.cleanup();
     }
 

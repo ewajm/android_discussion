@@ -41,6 +41,7 @@ public class PostDetailActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter<Comment, FireBaseCommentViewHolder> mFirebaseAdapter;
     private DatabaseReference mCommentReference;
+    private Post mPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +50,17 @@ public class PostDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        Post post = Parcels.unwrap(intent.getParcelableExtra("post"));
+        mPost = Parcels.unwrap(intent.getParcelableExtra("post"));
 
 
-        mPostTitle.setText(post.getTitle());
-        mPostCategory.setText(post.getCategory());
-        mPostBody.setText(post.getBody());
+        mPostTitle.setText(mPost.getTitle());
+        mPostCategory.setText(mPost.getCategory());
+        mPostBody.setText(mPost.getBody());
 
-        mCommentReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).child(post.getId()).child("comments");
+        mCommentReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).child(mPost.getId()).child(Constants.FIREBASE_COMMENTS_QUERY);
         setUpFirebaseAdapter();
 
-        Log.i(TAG, "onCreate: " + post.getId());
+        Log.i(TAG, "onCreate: " + mPost.getId());
 
         mAddCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +71,10 @@ public class PostDetailActivity extends AppCompatActivity {
                     mNewComment.setText("");
                     mNewCommentUser.setText("");
                     Comment comment = new Comment(commentHere, userName);
-                    mCommentReference.getRef().push().setValue(comment);
+                    comment.setPostId(mPost.getId());
+                    DatabaseReference pushRef = mCommentReference.getRef().push();
+                    comment.setId(pushRef.getKey());
+                    pushRef.setValue(comment);
                     mFirebaseAdapter.notifyDataSetChanged();
                     mNewCommentUser.setVisibility(View.GONE);
                     mNewComment.setVisibility(View.GONE);

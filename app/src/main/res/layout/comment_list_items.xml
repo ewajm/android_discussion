@@ -10,11 +10,47 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/usernameTextView"
-        android:paddingBottom="2dp"/>
+        android:paddingBottom="2dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/commentBodyTextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_thumb_down_black_24dp"
+            android:id="@+id/thumbDown"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dislikes: "
+            android:layout_marginTop="5dp"
+            android:id="@+id/dislikeText"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_thumb_up_black_24dp"
+            android:id="@+id/thumbUp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Likes: "
+            android:layout_marginTop="5dp"
+            android:id="@+id/likeText"/>
+
+    </LinearLayout>
 </LinearLayout>

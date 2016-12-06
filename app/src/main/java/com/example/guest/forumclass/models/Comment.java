@@ -10,6 +10,26 @@ import org.parceler.Parcel;
 public class Comment {
     String body;
     String userName;
+    int likes;
+    int dislikes;
+    String postId;
+    String id;
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Comment() {
     }
@@ -17,6 +37,8 @@ public class Comment {
     public Comment(String body, String userName) {
         this.body = body;
         this.userName = userName;
+        this.likes = 0;
+        this.dislikes = 0;
     }
 
     public String getUserName() {
@@ -35,4 +57,19 @@ public class Comment {
         this.body = body;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
 }

@@ -55,6 +55,7 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mCategories.clear();
+                mCategories.add("clear category selection");
                 for(DataSnapshot categorySnapshot : dataSnapshot.getChildren()){
                     mCategories.add(categorySnapshot.getValue().toString());
                 }
@@ -64,7 +65,11 @@ public class CategoriesActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(CategoriesActivity.this, MainActivity.class);
-                    addToSharedPreferences(mCategories.get(position));
+                    if(position == 0){
+                        mEditor.remove(Constants.FIREBASE_SINGLE_CATEGORY_QUERY).apply();
+                    } else {
+                        addToSharedPreferences(mCategories.get(position));
+                    }
                     startActivity(intent);
                     }
                 });

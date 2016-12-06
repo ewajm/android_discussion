@@ -7,5 +7,5 @@ public class Constants {
     public static final String FIREBASE_POST_QUERY = "posts";
     public static final String FIREBASE_CATEGORY_QUERY = "categories";
     public static final String FIREBASE_SINGLE_CATEGORY_QUERY = "category";
-    public static final String FIREBASE_COMMENTS_QUERY = "comment";
+    public static final String FIREBASE_COMMENTS_QUERY = "comments";
 }
