@@ -5,11 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.util.Log;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,14 +14,13 @@ import com.google.firebase.database.Query;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity {
+    private static final String TAG = CategoryActivity.class.getSimpleName();
     private Query mCurrentPostReference;
     private FirebaseRecyclerAdapter mFirebaseAdapter;
-
-    @Bind(R.id.button)
-    Button mCategoryActivityButton;
     @Bind(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    String mCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mCurrentPostReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).limitToLast(3).orderByChild("timestamp");
+        Intent intent = getIntent();
+        mCategory = intent.getStringExtra("category");
+        mCurrentPostReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).orderByChild(Constants.FIREBASE_SINGLE_CATEGORY_QUERY).equalTo(mCategory);
         setUpFirebaseAdapter();
-        mCategoryActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CategoriesActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void setUpFirebaseAdapter() {
@@ -52,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(FirebasePostViewHolder viewHolder,
                                               Post model, int position) {
+                Log.d("CategoryACtivity", "populateViewHolder: " + model.getTitle());
                 viewHolder.bindPost(model);
             }
         };
@@ -67,27 +58,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mFirebaseAdapter.cleanup();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // action with ID action_refresh was selected
-            case R.id.action_add_post:
-                Intent intent = new Intent(MainActivity.this, AddPostActivity.class);
-            startActivity(intent);
-            break;
-            default:
-                break;
-        }
-
-        return true;
     }
 }

@@ -42,8 +42,6 @@ public class FirebasePostViewHolder extends RecyclerView.ViewHolder {
 
         Picasso.with(mContext)
                 .load(post.getImageUrl())
-                .resize(MAX_WIDTH, MAX_HEIGHT)
-                .centerCrop()
                 .into(postImageView);
 
         nameTextView.setText(post.getTitle());

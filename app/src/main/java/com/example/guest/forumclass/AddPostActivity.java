@@ -26,6 +26,7 @@ public class AddPostActivity extends AppCompatActivity {
     Post mPost;
 
     private DatabaseReference mPostReference;
+    private DatabaseReference mCategoryReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class AddPostActivity extends AppCompatActivity {
             String imageUrl = mImageLinkEditText.getText().toString().trim();
             mPost = new Post(title, body, category, imageUrl);
             mPostReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY);
+            mCategoryReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CATEGORY_QUERY);
+
             mPostReference.push().setValue(mPost);
             Toast.makeText(AddPostActivity.this, "Saved", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AddPostActivity.this, MainActivity.class);

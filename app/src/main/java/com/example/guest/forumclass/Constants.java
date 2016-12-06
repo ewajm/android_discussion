@@ -5,4 +5,6 @@ package com.example.guest.forumclass;
  */
 public class Constants {
     public static final String FIREBASE_POST_QUERY = "posts";
+    public static final String FIREBASE_CATEGORY_QUERY = "categories";
+    public static final String FIREBASE_SINGLE_CATEGORY_QUERY = "category";
 }
