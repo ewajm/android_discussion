@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.guest.forumclass.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -29,7 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
-        android:layout_below="@+id/textView"/>
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/button"/>
 
     <Button
         android:layout_width="match_parent"
@@ -37,7 +38,7 @@
         android:text="Filter By Category"
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

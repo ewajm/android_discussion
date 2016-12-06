@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ui.PostDetailActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/postTitle"
+        android:text="Post Title"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/postCategory"
+        android:text="Post Category"
+        android:textSize="15dp"
+        android:textStyle="italic"
+        android:layout_below="@+id/postTitle"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/postBody"
+        android:text="Post Body"
+        android:textSize="20dp"
+        android:layout_below="@+id/postCategory"
+        android:layout_margin="15dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add New Comment"
+        android:layout_below="@+id/newComment"
+        android:id="@+id/addCommentButton"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter A New Comment..."
+        android:layout_below="@+id/newCommentUser"
+        android:id="@+id/newComment"
+        android:visibility="gone" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Your Name..."
+        android:id="@+id/newCommentUser"
+        android:layout_below="@+id/postBody"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addCommentButton"
+        android:layout_marginTop="30dp"
+        android:id="@+id/recyclerView"></android.support.v7.widget.RecyclerView>
+
+
+
+</RelativeLayout>

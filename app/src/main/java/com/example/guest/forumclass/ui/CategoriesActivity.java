@@ -1,6 +1,8 @@
-package com.example.guest.forumclass;
+package com.example.guest.forumclass.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.guest.forumclass.Constants;
+import com.example.guest.forumclass.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,13 +37,16 @@ public class CategoriesActivity extends AppCompatActivity {
     @Bind(R.id.addCategoryButton)
     Button mAddCategoryButton;
     private ValueEventListener mCategoryReferenceListener;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
+        setContentView(R.layout.activity_categories);
         ButterKnife.bind(this);
-
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
         mCategoryReference = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_CATEGORY_QUERY);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(CategoriesActivity.this, android.R.layout.simple_list_item_1, mCategories);
         mListView.setAdapter(adapter);
@@ -56,9 +63,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                     Intent intent = new Intent(CategoriesActivity.this, CategoryActivity.class);
-                        intent.putExtra("category", mCategories.get(position));
-                        startActivity(intent);
+                    Intent intent = new Intent(CategoriesActivity.this, MainActivity.class);
+                    addToSharedPreferences(mCategories.get(position));
+                    startActivity(intent);
                     }
                 });
             }
@@ -77,10 +84,14 @@ public class CategoriesActivity extends AppCompatActivity {
                     mCategoryReference.push().setValue(newCategory);
                     mAddCategoryEditText.setText("");
                 } else {
-                    Toast.makeText(CategoriesActivity.this, "Sorry, something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CategoriesActivity.this, "Sorry, one of two things went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void addToSharedPreferences(String location) {
+        mEditor.putString(Constants.FIREBASE_SINGLE_CATEGORY_QUERY, location).apply();
     }
 
     @Override

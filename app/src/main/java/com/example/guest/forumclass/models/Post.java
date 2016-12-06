@@ -1,17 +1,26 @@
-package com.example.guest.forumclass;
+package com.example.guest.forumclass.models;
 
-import java.security.Timestamp;
-import java.util.Date;
+import org.parceler.Parcel;
 
 /**
  * Created by Guest on 12/5/16.
  */
+@Parcel
 public class Post {
     String title;
     String body;
     String category;
     String imageUrl;
     Long timestamp;
+    String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Long getTimestamp() {
         return timestamp;
@@ -62,4 +71,5 @@ public class Post {
         this.imageUrl = imageUrl;
         this.timestamp = System.currentTimeMillis();
     }
+
 }

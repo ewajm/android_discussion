@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.guest.forumclass.AddPostActivity">
+    tools:context=".ui.AddPostActivity">
 
 
     <EditText
@@ -31,21 +31,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageLinkEditText"
-        android:layout_marginTop="48dp"
         android:hint="Add Link to an Image"
         android:layout_below="@+id/bodyEditText"
         android:layout_centerHorizontal="true"
         android:textAlignment="center" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/categoryEditText"
-        android:layout_below="@+id/bodyEditText"
-        android:layout_alignLeft="@+id/bodyEditText"
-        android:layout_alignStart="@+id/bodyEditText"
-        android:hint="Category"
-        android:textAlignment="center" />
+<android.support.v7.widget.AppCompatSpinner
+    android:layout_width="match_parent"
+    android:id="@+id/jerkSpinner"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/categoryTextView"
+></android.support.v7.widget.AppCompatSpinner>
 
     <Button
         android:layout_width="wrap_content"
@@ -54,4 +50,13 @@
         android:id="@+id/submitButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category:"
+        android:id="@+id/categoryTextView"
+        android:layout_below="@+id/imageLinkEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
