@@ -27,7 +27,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CategoriesActivity extends AppCompatActivity {
+public class CategoriesActivity extends BaseActivity {
     List<String> mCategories = new ArrayList<>();
     private DatabaseReference mCategoryReference;
     @Bind(R.id.listView)

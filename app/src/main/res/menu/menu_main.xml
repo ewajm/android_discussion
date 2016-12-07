@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_post"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_add_circle_white_24dp"
+        android:title="add"/>
+    <item
+        android:id="@+id/action_main"
+        android:title="Home"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_categories"
+        android:title="Categories"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:visible="true"
+        app:showAsAction="never" />
+</menu>

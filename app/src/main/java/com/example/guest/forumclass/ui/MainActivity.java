@@ -3,7 +3,6 @@ package com.example.guest.forumclass.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +23,7 @@ import com.google.firebase.database.Query;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private Query mCurrentPostReference;
     private FirebaseRecyclerAdapter mFirebaseAdapter;
 
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mCategory = mSharedPreferences.getString(Constants.FIREBASE_SINGLE_CATEGORY_QUERY, null);
@@ -90,25 +91,4 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAdapter.cleanup();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // action with ID action_refresh was selected
-            case R.id.action_add_post:
-                Intent intent = new Intent(MainActivity.this, AddPostActivity.class);
-            startActivity(intent);
-            break;
-            default:
-                break;
-        }
-
-        return true;
-    }
 }

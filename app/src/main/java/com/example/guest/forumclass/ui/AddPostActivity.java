@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AddPostActivity extends AppCompatActivity {
+public class AddPostActivity extends BaseActivity {
     @Bind(R.id.submitButton) Button mSubmitButton;
     @Bind(R.id.titleEditText)
     EditText mTitleEditText;

@@ -26,7 +26,7 @@ import org.parceler.Parcels;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PostDetailActivity extends AppCompatActivity {
+public class PostDetailActivity extends BaseActivity {
     private static final String TAG = PostDetailActivity.class.getSimpleName();
     @Bind(R.id.postTitle)
     TextView mPostTitle;
