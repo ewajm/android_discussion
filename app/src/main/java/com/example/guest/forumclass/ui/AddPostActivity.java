@@ -74,10 +74,11 @@ public class AddPostActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String title = mTitleEditText.getText().toString().trim();
+                String author = userName;
                 String body = mBodyEditText.getText().toString().trim();
                 String category = mJerkSpinner.getSelectedItem().toString();
                 String imageUrl = mImageLinkEditText.getText().toString().trim();
-                mPost = new Post(title, body, category, imageUrl);
+                mPost = new Post(title, author, body, category, imageUrl);
                 mPostReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY);
 
                 DatabaseReference pushRef= mPostReference.push();

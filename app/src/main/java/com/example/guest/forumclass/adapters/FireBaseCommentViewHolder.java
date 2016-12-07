@@ -61,7 +61,7 @@ public class FireBaseCommentViewHolder extends RecyclerView.ViewHolder implement
             mComment.setLikes(++thisLikeGuy);
             mLikeText.setText("Likes: " + thisLikeGuy);
         }
-        DatabaseReference thisRefGuy = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).child(mComment.getPostId()).child(Constants.FIREBASE_COMMENTS_QUERY).child(mComment.getId());
+        DatabaseReference thisRefGuy = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_COMMENTS_QUERY).child(mComment.getId());
         thisRefGuy.setValue(mComment);
 
     }

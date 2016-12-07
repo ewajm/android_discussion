@@ -42,15 +42,15 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
+        getSupportActionBar().setTitle("Home");
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mCategory = mSharedPreferences.getString(Constants.FIREBASE_SINGLE_CATEGORY_QUERY, null);
         if(mCategory == null){
-            mCurrentPostReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).limitToLast(3).orderByChild("timestamp");
+            mCurrentPostReference = postReference.limitToLast(3).orderByChild("timestamp");
 
         } else {
-            mCurrentPostReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).orderByChild(Constants.FIREBASE_SINGLE_CATEGORY_QUERY).equalTo(mCategory);
+            mCurrentPostReference = postReference.orderByChild(Constants.FIREBASE_SINGLE_CATEGORY_QUERY).equalTo(mCategory);
 
         }
         setUpFirebaseAdapter();

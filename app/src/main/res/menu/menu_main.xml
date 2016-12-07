@@ -18,6 +18,11 @@
         android:visible="true"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_chat"
+        android:title="Chat"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:title="Logout"
         android:visible="true"

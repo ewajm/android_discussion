@@ -11,16 +11,24 @@
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.CreateAccountActivity" />
         <activity android:name=".ui.BaseActivity" />
-        <activity android:name=".ui.LoginActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".ui.LoginActivity"
+            android:label="Log In">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".ui.AddPostActivity" />
+        <activity
+            android:name=".ui.AddPostActivity"
+            android:noHistory="true" />
         <activity android:name=".ui.CategoriesActivity" />
-        <activity android:name=".ui.PostDetailActivity"></activity>
+        <activity android:name=".ui.PostDetailActivity" />
+        <activity
+            android:name=".ui.ChatListActivity"
+            android:label="@string/title_activity_tab" />
+        <activity android:name=".ui.AddChatActivity"></activity>
     </application>
 
 </manifest>

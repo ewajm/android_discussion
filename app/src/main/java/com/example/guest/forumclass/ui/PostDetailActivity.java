@@ -31,16 +31,16 @@ public class PostDetailActivity extends BaseActivity {
     @Bind(R.id.postTitle)
     TextView mPostTitle;
     @Bind(R.id.postCategory) TextView mPostCategory;
+    @Bind(R.id.postAuthor) TextView mPostAuthor;
     @Bind(R.id.postBody) TextView mPostBody;
     @Bind(R.id.newComment)
     EditText mNewComment;
-    @Bind(R.id.newCommentUser) EditText mNewCommentUser;
     @Bind(R.id.addCommentButton)
     Button mAddCommentButton;
     @Bind(R.id.recyclerView)
     RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter<Comment, FireBaseCommentViewHolder> mFirebaseAdapter;
-    private DatabaseReference mCommentReference;
+    private Query mThisPostCommentReference;
     private Post mPost;
 
     @Override
@@ -49,6 +49,7 @@ public class PostDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_post_detail);
         ButterKnife.bind(this);
 
+        getSupportActionBar().setTitle("Post");
         Intent intent = getIntent();
         mPost = Parcels.unwrap(intent.getParcelableExtra("post"));
 
@@ -56,8 +57,8 @@ public class PostDetailActivity extends BaseActivity {
         mPostTitle.setText(mPost.getTitle());
         mPostCategory.setText(mPost.getCategory());
         mPostBody.setText(mPost.getBody());
-
-        mCommentReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY).child(mPost.getId()).child(Constants.FIREBASE_COMMENTS_QUERY);
+        mPostAuthor.setText(mPost.getAuthor());
+        mThisPostCommentReference = commentReference.orderByChild("postId").equalTo(mPost.getId());
         setUpFirebaseAdapter();
 
         Log.i(TAG, "onCreate: " + mPost.getId());
@@ -65,32 +66,22 @@ public class PostDetailActivity extends BaseActivity {
         mAddCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mNewCommentUser.getVisibility() == View.VISIBLE) {
                     String commentHere = mNewComment.getText().toString();
-                    String userName = mNewCommentUser.getText().toString();
                     mNewComment.setText("");
-                    mNewCommentUser.setText("");
                     Comment comment = new Comment(commentHere, userName);
                     comment.setPostId(mPost.getId());
-                    DatabaseReference pushRef = mCommentReference.getRef().push();
+                    DatabaseReference pushRef = commentReference.getRef().push();
                     comment.setId(pushRef.getKey());
                     pushRef.setValue(comment);
                     mFirebaseAdapter.notifyDataSetChanged();
-                    mNewCommentUser.setVisibility(View.GONE);
-                    mNewComment.setVisibility(View.GONE);
                     mAddCommentButton.setText("Add New Comment");
-                } else {
-                    mNewCommentUser.setVisibility(View.VISIBLE);
-                    mNewComment.setVisibility(View.VISIBLE);
-                    mAddCommentButton.setText("Add");
-                }
             }
         });
     }
     private void setUpFirebaseAdapter() {
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Comment, FireBaseCommentViewHolder>
                 (Comment.class, R.layout.comment_list_items, FireBaseCommentViewHolder.class,
-                        mCommentReference) {
+                        mThisPostCommentReference) {
 
             @Override
             protected void populateViewHolder(FireBaseCommentViewHolder viewHolder,
@@ -98,12 +89,12 @@ public class PostDetailActivity extends BaseActivity {
                 viewHolder.bindPost(model);
             }
         };
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mFirebaseAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+       // layoutManager.setReverseLayout(true);
+        //layoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(layoutManager);
+       // mRecyclerView.setHasFixedSize(true);
     }
 
     @Override

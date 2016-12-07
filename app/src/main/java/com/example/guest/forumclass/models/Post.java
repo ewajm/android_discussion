@@ -11,6 +11,7 @@ import java.util.List;
 @Parcel
 public class Post {
     String title;
+    String author;
     String body;
     String category;
     String imageUrl;
@@ -45,6 +46,14 @@ public class Post {
         this.title = title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getBody() {
         return body;
     }
@@ -69,8 +78,9 @@ public class Post {
         this.imageUrl = imageUrl;
     }
 
-    public Post(String title, String body, String category, String imageUrl) {
+    public Post(String title, String author, String body, String category, String imageUrl) {
         this.title = title;
+        this.author = author;
         this.body = body;
         this.category = category;
         this.imageUrl = imageUrl;
