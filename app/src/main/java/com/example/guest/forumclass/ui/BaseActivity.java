@@ -23,6 +23,7 @@ public class BaseActivity extends AppCompatActivity {
     public DatabaseReference postReference;
     public DatabaseReference commentReference;
     public DatabaseReference chatReference;
+    public DatabaseReference userReference;
 
     public FirebaseAuth mAuth;
     public FirebaseAuth.AuthStateListener mAuthListener;
@@ -39,6 +40,7 @@ public class BaseActivity extends AppCompatActivity {
         postReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY);
         commentReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_COMMENTS_QUERY);
         chatReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY);
+        userReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USER_QUERY);
         mContext = this;
         //Toolbar toolbar = new Toolbar(mContext);
         //toolbar.setTitle(mContext.getClass().getSimpleName());

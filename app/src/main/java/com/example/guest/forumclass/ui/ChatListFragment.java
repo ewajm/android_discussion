@@ -5,22 +5,32 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.guest.forumclass.Constants;
 import com.example.guest.forumclass.R;
-import com.example.guest.forumclass.adapters.FirebaseChatViewHolder;
+import com.example.guest.forumclass.adapters.ChatViewHolder;
+import com.example.guest.forumclass.adapters.PrivateChatListAdapter;
 import com.example.guest.forumclass.models.Chat;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-import org.parceler.Parcels;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,16 +38,19 @@ import butterknife.ButterKnife;
 public class ChatListFragment extends Fragment {
     Query chatQuery;
     boolean isPublic;
-    String uid;
+    String mUid;
     private FirebaseRecyclerAdapter mFirebaseAdapter;
+    private PrivateChatListAdapter mChatAdapter;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+    private ArrayList<Chat> mChats = new ArrayList<>();
+    private ValueEventListener mChatEventListener;
+    private DatabaseReference mPrivateChatRef;
 
 
-    public static ChatListFragment newInstance(int position, String uid){
+    public static ChatListFragment newInstance(int position){
         ChatListFragment chatListFragment = new ChatListFragment();
         Bundle args = new Bundle();
         args.putInt("position", position);
-        args.putString("uid", uid);
         chatListFragment.setArguments(args);
         return chatListFragment;
     }
@@ -46,7 +59,7 @@ public class ChatListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isPublic = getArguments().getInt("position") == 0;
-        uid = getArguments().getString("uid");
+        mUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
 
@@ -57,22 +70,88 @@ public class ChatListFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_chat_list, container, false);
         ButterKnife.bind(this, view);
 
-        if(isPublic){
-            chatQuery = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY).orderByChild("publicChat").equalTo(true);
-        } else {
-            chatQuery = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY).orderByChild("users").equalTo(uid);
-        }
-        setUpFirebaseAdapter();
+        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(isPublic) {
+                    if (dataSnapshot.hasChild("chats")) {
+                        chatQuery = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY).orderByChild("publicChat").equalTo(true);
+                        setUpFirebaseAdapter();
+                    }
+                } else if(dataSnapshot.hasChild("users")){
+                    if(dataSnapshot.child("users").hasChild(mUid) && dataSnapshot.child("users").child(mUid).child("chats").hasChild("private")){
+                        setUpRecyclerAdapter();
+                        Log.i(TAG, "onDataChange: has userid!");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return view;
     }
 
+    private void setUpRecyclerAdapter() {
+        mPrivateChatRef = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USER_QUERY).child(mUid).child("chats").child("private");
+        mChatAdapter = new PrivateChatListAdapter(mChats, getContext());
+        mRecyclerView.setAdapter(mChatAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setHasFixedSize(true);
+        mChatEventListener = mPrivateChatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mChats.clear();
+
+                for (DataSnapshot repliesSnapshot : dataSnapshot.getChildren()) {
+                    Log.i(TAG, "onDataChange: " + repliesSnapshot.getKey());
+                    chatQuery = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY);
+                    //--------------
+                    Query queryRef = chatQuery.orderByKey().equalTo(repliesSnapshot.getKey());
+                    //--------------
+                    queryRef.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            Chat chat = dataSnapshot.getValue(Chat.class);
+                            mChats.add(chat);
+                            mChatAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void setUpFirebaseAdapter() {
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Chat, FirebaseChatViewHolder>
-                (Chat.class, R.layout.chat_list_item, FirebaseChatViewHolder.class,
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<Chat, ChatViewHolder>
+                (Chat.class, R.layout.chat_list_item, ChatViewHolder.class,
                         chatQuery) {
 
             @Override
-            protected void populateViewHolder(FirebaseChatViewHolder viewHolder,
+            protected void populateViewHolder(ChatViewHolder viewHolder,
                                               Chat model, int position) {
                 viewHolder.bindChat(model);
             }
@@ -82,4 +161,9 @@ public class ChatListFragment extends Fragment {
         mRecyclerView.setAdapter(mFirebaseAdapter);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //mPrivateChatRef.removeEventListener(mChatEventListener);
+    }
 }

@@ -12,11 +12,11 @@ import com.example.guest.forumclass.models.Post;
 /**
  * Created by Guest on 12/7/16.
  */
-public class FirebaseChatViewHolder extends RecyclerView.ViewHolder{
+public class ChatViewHolder extends RecyclerView.ViewHolder{
     View mView;
     Context mContext;
 
-    public FirebaseChatViewHolder(View itemView) {
+    public ChatViewHolder(View itemView) {
         super(itemView);
         mView = itemView;
         mContext = itemView.getContext();

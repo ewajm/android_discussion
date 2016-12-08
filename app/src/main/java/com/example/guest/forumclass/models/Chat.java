@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chat {
-    //List<String> users = new ArrayList<>();
-    //List<String> messages = new ArrayList<>();
     boolean publicChat;
     String pushId;
     String title;

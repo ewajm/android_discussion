@@ -8,14 +8,14 @@ import java.util.List;
 @Parcel
 public class User {
     String name;
-    List<String> chats = new ArrayList<>();
     String pushId;
 
     public User() {
     }
 
-    public User(String name) {
+    public User(String name, String pushId) {
         this.name = name;
+        this.pushId = pushId;
     }
 
     public String getName() {
@@ -24,10 +24,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<String> getChats() {
-        return chats;
     }
 
 
