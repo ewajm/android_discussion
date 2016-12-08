@@ -42,4 +42,8 @@ public class Chat {
         this.title = title;
     }
 
+    public String getChatTypeString(){
+        return publicChat? "public":"private";
+    }
+
 }

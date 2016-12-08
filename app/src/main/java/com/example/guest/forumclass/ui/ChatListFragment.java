@@ -45,6 +45,7 @@ public class ChatListFragment extends Fragment {
     private ArrayList<Chat> mChats = new ArrayList<>();
     private ValueEventListener mChatEventListener;
     private DatabaseReference mPrivateChatRef;
+    private ValueEventListener mValueEventListener;
 
 
     public static ChatListFragment newInstance(int position){
@@ -70,16 +71,16 @@ public class ChatListFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_chat_list, container, false);
         ButterKnife.bind(this, view);
 
-        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
+        mValueEventListener = FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(isPublic) {
+                if (isPublic) {
                     if (dataSnapshot.hasChild("chats")) {
                         chatQuery = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY).orderByChild("publicChat").equalTo(true);
                         setUpFirebaseAdapter();
                     }
-                } else if(dataSnapshot.hasChild("users")){
-                    if(dataSnapshot.child("users").hasChild(mUid) && dataSnapshot.child("users").child(mUid).child("chats").hasChild("private")){
+                } else if (dataSnapshot.hasChild("users")) {
+                    if (dataSnapshot.child("users").hasChild(mUid) && dataSnapshot.child("users").child(mUid).child("chats").hasChild("private")) {
                         setUpRecyclerAdapter();
                         Log.i(TAG, "onDataChange: has userid!");
                     }
@@ -164,6 +165,9 @@ public class ChatListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //mPrivateChatRef.removeEventListener(mChatEventListener);
+        if(mPrivateChatRef != null){
+            mPrivateChatRef.removeEventListener(mChatEventListener);
+        }
+        FirebaseDatabase.getInstance().getReference().removeEventListener(mValueEventListener);
     }
 }

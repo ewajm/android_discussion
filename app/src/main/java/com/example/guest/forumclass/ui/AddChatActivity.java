@@ -33,14 +33,13 @@ public class AddChatActivity extends BaseActivity {
             public void onClick(View v) {
                 String title = mTitleEditText.getText().toString().trim();
                 boolean isPublic = !mPublicSwitch.isChecked();
-                String chatType = isPublic ? "public" : "private";
                 Chat chat = new Chat(isPublic, title);
                 DatabaseReference pushRef = chatReference.push();
                 String pushId = pushRef.getKey();
                 chat.setPushId(pushId);
                 pushRef.setValue(chat);
                 chatReference.child(pushId).child("users").child(userId).setValue(true);
-                userReference.child(userId).child("chats").child(chatType).child(pushId).setValue(true);
+                userReference.child(userId).child("chats").child(chat.getChatTypeString()).child(pushId).setValue(true);
                 Toast.makeText(AddChatActivity.this, "Chat created!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AddChatActivity.this, ChatListActivity.class);
                 startActivity(intent);

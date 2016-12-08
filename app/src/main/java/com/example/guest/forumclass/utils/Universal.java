@@ -44,4 +44,5 @@ public class Universal {
         Intent intent = new Intent(mContext, AddChatActivity.class);
         mContext.startActivity(intent);
     }
+
 }
