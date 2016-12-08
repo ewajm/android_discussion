@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chat {
-    List<String> users = new ArrayList<>();
-    List<String> messages = new ArrayList<>();
-    boolean isPublic = true;
+    //List<String> users = new ArrayList<>();
+    //List<String> messages = new ArrayList<>();
+    boolean publicChat;
     String pushId;
     String title;
 
@@ -15,16 +15,17 @@ public class Chat {
     }
 
     public Chat(boolean isPublic, String title) {
-        this.isPublic = isPublic;
+        this.publicChat = isPublic;
         this.title = title;
     }
 
-    public boolean isPublic() {
-        return isPublic;
+
+    public boolean getPublicChat() {
+        return publicChat;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setPublicChat(boolean publicChat) {
+        this.publicChat = publicChat;
     }
 
     public String getPushId() {
@@ -43,11 +44,4 @@ public class Chat {
         this.title = title;
     }
 
-    public List<String> getUsers() {
-        return users;
-    }
-
-    public List<String> getMessages() {
-        return messages;
-    }
 }

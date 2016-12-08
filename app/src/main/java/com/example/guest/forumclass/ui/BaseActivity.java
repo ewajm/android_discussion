@@ -38,7 +38,7 @@ public class BaseActivity extends AppCompatActivity {
 
         postReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_POST_QUERY);
         commentReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_COMMENTS_QUERY);
-        chatReference = FirebaseDatabase.getInstance().getReference();
+        chatReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY);
         mContext = this;
         //Toolbar toolbar = new Toolbar(mContext);
         //toolbar.setTitle(mContext.getClass().getSimpleName());

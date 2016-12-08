@@ -15,7 +15,6 @@ import com.example.guest.forumclass.models.Post;
 public class FirebaseChatViewHolder extends RecyclerView.ViewHolder{
     View mView;
     Context mContext;
-    Chat mChat;
 
     public FirebaseChatViewHolder(View itemView) {
         super(itemView);
@@ -25,6 +24,6 @@ public class FirebaseChatViewHolder extends RecyclerView.ViewHolder{
 
     public void bindChat(Chat chat) {
         TextView chatTextView = (TextView) mView.findViewById(R.id.titleTextView);
-        chatTextView.setText(mChat.getTitle());
+        chatTextView.setText(chat.getTitle());
     }
 }
