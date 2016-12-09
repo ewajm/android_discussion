@@ -1,9 +1,12 @@
 package com.example.guest.forumclass.models;
 
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Chat {
     boolean publicChat;
     String pushId;

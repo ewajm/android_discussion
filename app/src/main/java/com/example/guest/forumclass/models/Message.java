@@ -6,9 +6,22 @@ import org.parceler.Parcel;
 public class Message {
     String body;
     String userName;
+    String userId;
     String chatId;
     long timeStamp;
     String id;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
     public String getChatId() {
         return chatId;
@@ -29,9 +42,10 @@ public class Message {
     public Message() {
     }
 
-    public Message(String body, String userName, String chatId) {
+    public Message(String body, String userName, String userId, String chatId) {
         this.body = body;
         this.userName = userName;
+        this.userId = userId;
         this.chatId = chatId;
         this.timeStamp = System.currentTimeMillis();
     }

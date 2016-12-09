@@ -1,6 +1,8 @@
 package com.example.guest.forumclass.ui;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -25,11 +27,17 @@ import static android.content.ContentValues.TAG;
  */
 
 public class UserDialogFragment extends DialogFragment {
-    ArrayList<String> mSelected;
+    ArrayList<String> mSelected = new ArrayList<>();
     ArrayList<String> mUserNames;
     ArrayList<String> mUserIds;
     DatabaseReference mUserReference;
     private ValueEventListener mValueEventListener;
+
+    public interface UserDialogListener{
+        public void onDialogPositiveClick(ArrayList<String> selected, DialogFragment dialog);
+    }
+
+    UserDialogListener mListener;
 
     public static UserDialogFragment newInstance(ArrayList<String> userNames, ArrayList<String> userIds){
         UserDialogFragment dialogFragment = new UserDialogFragment();
@@ -41,6 +49,21 @@ public class UserDialogFragment extends DialogFragment {
 
         return dialogFragment;
     }
+    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // Verify that the host context implements the callback interface
+        try {
+            // Instantiate the NoticeDialogListener so we can send events to the host
+            mListener = (UserDialogListener) context;
+        } catch (ClassCastException e) {
+            // The context doesn't implement the interface, throw exception
+            throw new ClassCastException(context.toString()
+                    + " must implement NoticeDialogListener");
+        }
+    }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -63,7 +86,7 @@ public class UserDialogFragment extends DialogFragment {
                 })
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        mListener.onDialogPositiveClick(mSelected, UserDialogFragment.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -74,27 +97,4 @@ public class UserDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-//    public void createUserList(){
-//        mUserReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USER_QUERY);
-//        mValueEventListener = mUserReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot mUserSnapshot : dataSnapshot.getChildren()) {
-//                    mUserIds.add(mUserSnapshot.getKey());
-//                    mUserNames.add(mUserSnapshot.child("name").getValue().toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-       // mUserReference.removeEventListener(mValueEventListener);
-    }
 }

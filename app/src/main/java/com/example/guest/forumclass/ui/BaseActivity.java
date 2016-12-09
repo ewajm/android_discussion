@@ -31,6 +31,7 @@ public class BaseActivity extends AppCompatActivity {
     public String userId;
     Universal mUniversal;
     Context mContext;
+    public DatabaseReference messageReference;
 
 
     @Override
@@ -41,6 +42,7 @@ public class BaseActivity extends AppCompatActivity {
         commentReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_COMMENTS_QUERY);
         chatReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY);
         userReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USER_QUERY);
+        messageReference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_MESSAGE_QUERY);
         mContext = this;
         //Toolbar toolbar = new Toolbar(mContext);
         //toolbar.setTitle(mContext.getClass().getSimpleName());

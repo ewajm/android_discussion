@@ -14,6 +14,8 @@ import com.example.guest.forumclass.ui.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.parceler.Parcels;
+
 /**
  * Created by Guest on 12/7/16.
  */
@@ -43,7 +45,7 @@ public class ChatViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USER_QUERY).child(uid).child("chats").child(mChat.getChatTypeString()).child(mChat.getPushId()).setValue(true);
         }
         Intent intent = new Intent(mContext, ChatActivity.class);
-        intent.putExtra("chatId", mChat.getPushId());
+        intent.putExtra("chat", Parcels.wrap(mChat));
         mContext.startActivity(intent);
     }
 }

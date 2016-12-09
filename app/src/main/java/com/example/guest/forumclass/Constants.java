@@ -10,4 +10,5 @@ public class Constants {
     public static final String FIREBASE_COMMENTS_QUERY = "comments";
     public static final String FIREBASE_CHAT_QUERY="chats";
     public static final String FIREBASE_USER_QUERY="users";
+    public static final String FIREBASE_MESSAGE_QUERY="messages";
 }
