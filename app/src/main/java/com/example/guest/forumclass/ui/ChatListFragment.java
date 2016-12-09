@@ -82,7 +82,6 @@ public class ChatListFragment extends Fragment {
                 } else if (dataSnapshot.hasChild("users")) {
                     if (dataSnapshot.child("users").hasChild(mUid) && dataSnapshot.child("users").child(mUid).child("chats").hasChild("private")) {
                         setUpRecyclerAdapter();
-                        Log.i(TAG, "onDataChange: has userid!");
                     }
                 }
             }
@@ -107,7 +106,6 @@ public class ChatListFragment extends Fragment {
                 mChats.clear();
 
                 for (DataSnapshot repliesSnapshot : dataSnapshot.getChildren()) {
-                    Log.i(TAG, "onDataChange: " + repliesSnapshot.getKey());
                     chatQuery = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHAT_QUERY);
                     //--------------
                     Query queryRef = chatQuery.orderByKey().equalTo(repliesSnapshot.getKey());
@@ -169,5 +167,8 @@ public class ChatListFragment extends Fragment {
             mPrivateChatRef.removeEventListener(mChatEventListener);
         }
         FirebaseDatabase.getInstance().getReference().removeEventListener(mValueEventListener);
+        if(mFirebaseAdapter != null){
+            mFirebaseAdapter.cleanup();
+        }
     }
 }

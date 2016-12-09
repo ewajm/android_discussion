@@ -9,13 +9,14 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView"></android.support.v7.widget.RecyclerView>
+        android:id="@+id/recyclerView"
+        android:layout_above="@+id/addMessageLinearLayout"></android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/addTodoLinearLayout"
+        android:id="@+id/addMessageLinearLayout"
         android:gravity="center_vertical"
         android:layout_marginLeft="5dp"
         >
@@ -35,6 +36,6 @@
             android:id="@+id/newMessageButton"
             android:text="+"
             android:textSize="24sp"
-            android:enabled="false"/>
+            />
     </LinearLayout>
 </RelativeLayout>

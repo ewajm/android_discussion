@@ -107,9 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                mAuthProgressDialog.dismiss();
-               Log.d("Justin: ", "signInWithEmail:onComplete:" + task.isSuccessful());
                if(!task.isSuccessful()) {
-                   Log.w("Justin: ", "signInWithEmail", task.getException());
                    Toast.makeText(LoginActivity.this, "Auth Failed.", Toast.LENGTH_SHORT).show();
                }
            }

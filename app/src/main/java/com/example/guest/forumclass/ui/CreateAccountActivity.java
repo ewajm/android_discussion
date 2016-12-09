@@ -114,7 +114,6 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                 mAuthProgressDialog.dismiss();
 
                 if(task.isSuccessful()){
-                    Log.d("Justin: ", "Auth successful");
                     createFirebaseUserProfile(task.getResult().getUser());
                 } else {
                     Toast.makeText(CreateAccountActivity.this, "Auth failed", Toast.LENGTH_LONG).show();
@@ -184,7 +183,6 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {
-                    Log.d("Justin: ", user.getDisplayName());
                     FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_USER_QUERY).child(user.getUid()).child("username").setValue( user.getDisplayName());
                 }
             }

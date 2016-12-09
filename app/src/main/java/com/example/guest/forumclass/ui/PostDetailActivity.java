@@ -61,8 +61,6 @@ public class PostDetailActivity extends BaseActivity {
         mThisPostCommentReference = commentReference.orderByChild("postId").equalTo(mPost.getId());
         setUpFirebaseAdapter();
 
-        Log.i(TAG, "onCreate: " + mPost.getId());
-
         mAddCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
