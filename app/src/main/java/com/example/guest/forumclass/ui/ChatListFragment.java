@@ -71,6 +71,13 @@ public class ChatListFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_chat_list, container, false);
         ButterKnife.bind(this, view);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         mValueEventListener = FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,7 +98,6 @@ public class ChatListFragment extends Fragment {
 
             }
         });
-        return view;
     }
 
     private void setUpRecyclerAdapter() {
@@ -161,8 +167,8 @@ public class ChatListFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         if(mPrivateChatRef != null){
             mPrivateChatRef.removeEventListener(mChatEventListener);
         }
@@ -170,5 +176,10 @@ public class ChatListFragment extends Fragment {
         if(mFirebaseAdapter != null){
             mFirebaseAdapter.cleanup();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
