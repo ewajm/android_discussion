@@ -70,9 +70,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         mValueEventListener = mUserReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mUserIds.clear();
+                mUserNames.clear();
                 for (DataSnapshot mUserSnapshot : dataSnapshot.getChildren()) {
-                    mUserIds.add(mUserSnapshot.getKey());
-                    mUserNames.add(mUserSnapshot.child("username").getValue().toString());
+                    if(!mUserIds.contains(mUserSnapshot.getKey())){
+                        mUserIds.add(mUserSnapshot.getKey());
+                    }
+                    if(!mUserNames.contains(mUserSnapshot.child("username").getValue().toString())){
+                        mUserNames.add(mUserSnapshot.child("username").getValue().toString());
+                    }
                 }
                 invalidateOptionsMenu();
             }

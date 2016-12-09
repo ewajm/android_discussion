@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+//TODO: this should go directly to generated chat (deal with backstack)
+
 public class AddChatActivity extends BaseActivity {
     @Bind(R.id.titleEditText) EditText mTitleEditText;
     @Bind(R.id.publicSwitch) Switch mPublicSwitch;

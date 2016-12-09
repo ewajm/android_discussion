@@ -20,6 +20,26 @@ public class Chat {
         this.title = title;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Chat chat = (Chat) o;
+
+        if (publicChat != chat.publicChat) return false;
+        if (pushId != null ? !pushId.equals(chat.pushId) : chat.pushId != null) return false;
+        return title != null ? title.equals(chat.title) : chat.title == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (publicChat ? 1 : 0);
+        result = 31 * result + (pushId != null ? pushId.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
+    }
 
     public boolean getPublicChat() {
         return publicChat;

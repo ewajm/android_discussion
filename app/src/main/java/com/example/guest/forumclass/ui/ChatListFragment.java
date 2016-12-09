@@ -120,8 +120,10 @@ public class ChatListFragment extends Fragment {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                             Chat chat = dataSnapshot.getValue(Chat.class);
-                            mChats.add(chat);
-                            mChatAdapter.notifyDataSetChanged();
+                            if(!mChats.contains(chat)){
+                                mChats.add(chat);
+                                mChatAdapter.notifyDataSetChanged();
+                            }
                         }
 
                         @Override
